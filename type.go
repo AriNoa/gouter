@@ -32,3 +32,15 @@ func (r *Router) AddHandler(command string, handler Handler) error {
 
 	return nil
 }
+
+func (r *Router) Route(str string) {
+	cmd, arg := DetachCommandFrom(str)
+
+	if handler, ok := r.handlers[cmd]; ok {
+		handler.Handle(arg)
+	}
+
+	if child, ok := r.childern[cmd]; ok {
+		child.Route(arg)
+	}
+}
