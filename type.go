@@ -13,6 +13,13 @@ type Router struct {
 	handlers map[string]Handler
 }
 
+func New() *Router {
+	return &Router{
+		map[string]*Router{},
+		map[string]Handler{},
+	}
+}
+
 func (r *Router) AddRouter(command string, router *Router) error {
 	if _, ok := r.childern[command]; ok {
 		return errors.New("Router for the command already exists")
